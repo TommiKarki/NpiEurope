@@ -1,0 +1,73 @@
+---
+title: "methods"
+author: "Hugo Gruson"
+date: "6/23/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Materials and methods
+
+### Epidemiological model
+
+To model the evolution of the epidemic in the different countries, we built a
+model derived from a stochastic SEIR model. As illustrated in the figure
+below, state variables (A and U) were added to account for the fact that most
+virus carriers display few or no symptoms and go undetected while still 
+contributing to the virus transmission.
+
+[Add figure that shows the model with the various state variable and transition
+rates]
+
+Additionally, because clinical data show that COVID-19 impacts individuals
+differently, both in term of transmission and severity / lethality, depending on
+their age, we modified the model to add age structure. We used 8 age classes:
+
+### Data sources
+
+The daily new cases and new deaths for each country, as well as the various
+mitigation strategies across time, were collated by ...
+
+The contact data between the aforementioned age classes comes from...
+
+Finally, we used publicly available age data from 
+https://www.populationpyramid.net/. This data is released under a Creative 
+Commons Attribution 3.0 (CC BY) license.
+
+### Estimation of asymptomatic cases
+
+We estimated daily asymptomatic cases for each country using the daily new
+reported cases and daily new deaths and the capture/recapture methodology
+described in @Boehning2020. The number of daily new asymptomatic cases is then:
+
+\[\frac{\Delta N(t)[\Delta N(t)-1]}{1+\max(0,\Delta N(t-1)-\Delta D(t))}\]
+
+where $t$ is the time, $\Delta N(t)$ is the daily number of new cases and 
+$\Delta D(t)$ is the daily number of new deaths.
+
+We verified that the resulting proportion of asymptomatic cases across time
+matched well other known sources from the literature [@Russell2020].
+
+### Estimation of transmission rate under different scenarios
+
+We estimated the transmission rate across time by running a particle Monte Carlo
+Markov Chain (pMCMC) with the epidemiological model mentioned earlier. The
+chains had 5000 iterations with a burn in of XX and a thinning of 1/10. The
+likelihood was computed with a particle filter of XX particles and negative
+binomial function of parameter 0.5 on the daily number of new cases.
+
+### Efficiency of transmission mitigation strategies
+
+With the transmission rates computed earlier, we were able to determine the 
+efficiency of the various mitigation strategies (school closures, full lockdown,
+etc.) in reducing the transmission of the virus.
+
+### Software and computing resources
+
+All simulation and analyses were conducted using R 3.6 on the IRD itrop HPC 
+(South Green Platform) at IRD Montpellier (https://bioinfo.ird.fr/). All code
+is available at [URL].
+
